@@ -3,7 +3,6 @@ class Captcha extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
         this.value = "";
-        this.state = "";
         this.callback = null;
     }
 
@@ -76,28 +75,23 @@ class Captcha extends HTMLElement {
             if (this.callback) {
                 this.callback({
                     captcha: value,
-                    state: this.state
                 });
             }
             this.dialog.open = false;
         });
 
-        // 初始化验证码
-        this.refreshCaptcha();
     }
 
-    refreshCaptcha() {
+    refreshCaptcha(scene) {
         const timestamp = new Date().getTime();
-        const state = Math.random().toString(36).substring(2, 15);
-        this.state = state;
-        this.captchaImage.src = `/login/captcha?t=${timestamp}&state=${state}`;
+        this.captchaImage.src = `/login/captcha?t=${timestamp}&scene=${scene}`;
         this.captchaInput.value = "";
     }
 
-    show(callback) {
+    show(scene,callback) {
         this.callback = callback;
         this.dialog.open = true;
-        this.refreshCaptcha();
+        this.refreshCaptcha(scene);
     }
 }
 
