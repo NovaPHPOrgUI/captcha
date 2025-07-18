@@ -82,16 +82,16 @@ class Captcha extends HTMLElement {
 
     }
 
-    refreshCaptcha(scene) {
+    refreshCaptcha() {
         const timestamp = new Date().getTime();
-        this.captchaImage.src = `/login/captcha?t=${timestamp}&scene=${scene}`;
+        this.captchaImage.src = `/login/captcha?t=${timestamp}`;
         this.captchaInput.value = "";
     }
 
-    show(scene,callback) {
+    show(callback) {
         this.callback = callback;
         this.dialog.open = true;
-        this.refreshCaptcha(scene);
+        this.refreshCaptcha();
     }
 }
 
